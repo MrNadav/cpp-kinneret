@@ -21,8 +21,8 @@ class Trip
         Date getDate() const;
 
         void setTripNum(int tripNum);
-        void setDest(char* dest);
-        void setDate(Date date);
+        void setDest(const char* dest);
+        void setDate(const Date& date);
 
         void printTrip() const; 
 
