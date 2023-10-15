@@ -16,6 +16,7 @@
         "xstring": "cpp",
         "xutility": "cpp",
         "cctype": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "iostream": "cpp"
     }
 }
