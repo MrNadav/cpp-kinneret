@@ -58,7 +58,8 @@ void addTrip(ManagementTrips& mts) {
     cin >> day >> month >> year;
 
 
-    //Trip* newTrip = new Trip(destination.c_str(), Date(day, month, year)); 
+    Trip* newTrip = new Trip(destination.c_str(), Date(day, month, year)); 
 
-    //mts += *newTrip; 
+    mts += *newTrip; 
 }
+
