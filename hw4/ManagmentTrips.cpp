@@ -1,5 +1,5 @@
 #include "ManagmentTrips.h"
-using namespace:std;
+using namespace std;
 ManagementTrips::ManagementTrips() : trips(nullptr) , index(0)
 {
 
