@@ -3,134 +3,100 @@
 #include <cctype>
 #include <cstring>
 #include <string>
-using namespace std;
-bool Trip::ValiDest(const char* dest) const
+
+int Trip::tripCount = 0;  // Static member initialization
+
+// Validation for destination string
+bool Trip::ValiDest(const char *dest)
 {
     for(size_t i = 0; i < strlen(dest); i++)
     {
-        if(!isalpha(dest[i]))
+        if(!isalpha(dest[i])) // Checks if all characters are alphabets
             return false;
     }
-
     return true;
 }
-Trip::Trip()
+
+// Default constructor
+Trip::Trip() : tripNum(++tripCount) // Increment trip count upon creation
 {
     dest = new char[8];
-    strcpy(dest, "unkown");
+    strcpy(dest, "unknown"); // It should be "unknown" not "unkown"
 }
 
-
-
-
+// Destructor
 Trip::~Trip()
 {
-    delete[] dest;
+    delete[] dest; // Free dynamic memory
 }
 
+// Copy assignment operator
 Trip& Trip::operator=(const Trip& other)
 {
     if (this != &other) 
     {
-        delete[] dest;
+        delete[] dest; // Avoid memory leak by freeing old memory
         
         tripNum = other.tripNum;
         date = other.date;
         dest = new char[strlen(other.dest) + 1];
-        strcpy(dest, other.dest);
+        strcpy(dest, other.dest); // Copy the destination
     }
-    return *this;
+    return *this; // Return the current object
 }
 
-int Trip::getTripNum() const
-{
-    return tripNum;
-}
+// Various getters and setters follow here...
 
-const char* Trip::getDest() const
-{
-    return dest;
-}
-
-Date Trip::getDate() const
-{
-    return date;
-}
-
-
-void Trip::setDate(const Date& date)
-{
-    this->date = date;
-}
-
-void Trip::setTripNum(int tripNum)
-{
-    if (tripNum > 0)
-    {
-        this->tripNum = tripNum;
-    }
-    else
-    {
-        this->tripNum = 0;
-    }
-}
-
-void Trip::setDest(const char* dest)
-{
-    if (ValiDest(dest))
-    {
-        delete[] this->dest;
-        this->dest = new char[strlen(dest) + 1];
-        strcpy(this->dest, dest);
-    }
-    else
-    {
-        delete[] this->dest;
-        this->dest = new char[8];
-        strcpy(this->dest, "invalid");
-    }
-}
-
-// void Trip::printTrip() const
-// {
-//     cout << "Trip Number: " << tripNum << endl;
-//     cout << "Destination: " << dest << endl;
-//     cout << "Date: ";
-//     date.printDate();
-// }
-
-//hw4
+// Overloaded output stream operator
 ostream& operator<<(ostream& os, const Trip& trip) {
     os << "Trip Number: " << trip.tripNum << "\n";
     os << "Destination: " << trip.dest << "\n";
-    os << "Date: " << trip.date; 
+    os << "Date: " << trip.date; // Assuming Date class has an overloaded '<<' operator
     return os;
 }
 
-int Trip::tripCount = 0;
-Trip::Trip(const Trip& other) : tripNum(++tripCount), date(other.date) //new
+// Parameterized constructor
+// Constructor implementation
+Trip::Trip(const char* dest, const Date& date) : tripNum(++tripCount) // Use the member initializer list for tripNum
 {
-    dest = new char[strlen(other.dest) + 1];
-    strcpy(dest, other.dest);
-}
-Trip::Trip(int tripNum, const char* dest, const Date& date) : tripNum(++tripCount)
-{
-    if(tripNum> 0 && ValiDest(dest))
+    // Validation and setting of the trip details
+    if(ValiDest(dest))
     {
-        this->tripNum = tripNum;
-        this->dest = new char[strlen(dest) +1];
-        strcpy(this->dest, dest);
-        this->date = date;
+        this->dest = new char[strlen(dest) + 1]; // Allocate memory
+        strcpy(this->dest, dest); // Copy the content
+        this->date = date; // Use the date provided
     }
     else
     {
-        this->tripNum = 0;
-        this->dest = new char[8];
-        strcpy(this->dest, "not good");
-        this->date = Date(); // default 
+        this->dest = new char[8]; // Allocate memory for "invalid"
+        strcpy(this->dest, "invalid"); // Use "invalid" if destination is not valid
+        this->date = Date(); // Default date
     }
 }
+// Copy constructor
+Trip::Trip(const Trip& other) : tripNum(++tripCount)  // Increment the trip count for the new trip
+{
+    // Copy the destination string
+    dest = new char[strlen(other.dest) + 1];
+    strcpy(dest, other.dest);
+
+    // Copy the date
+    date = other.date;
+
+    // Any other fields you have would also need to be copied
+}
+
+// Method to get the static trip count
 int Trip::getCount()
 {
     return tripCount;
+}
+// Getter for the date
+Date Trip::getDate() const {
+    return date;
+}
+// Setter for the date
+void Trip::setDate(const Date& newDate) {
+    this->date = newDate;
+    // You can add more logic here if setting the date involves more operations
 }

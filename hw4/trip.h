@@ -1,37 +1,36 @@
 #ifndef TRIP_H
 #define TRIP_H
+
 #include "date.h"
+#include <iostream>
 using namespace std;
+
 class Trip
 {
-    private:
-        int tripNum;
-        char* dest;
-        Date date;
-        bool ValiDest(const char* dest) const;
-        //hw4
-        static int tripCount;
-    public:
-        Trip();
-        Trip(int tripNum, const char* dest, const Date& d);
-        Trip(const Trip& other); // copy constructor
-        ~Trip(); // destructor
-        Trip& operator=(const Trip& other); // copy assignment operator
+private:
+    static int tripCount;
+    int tripNum;
+    char* dest;
+    Date date;
+    bool ValiDest(const char* dest);
 
+public:
+    Trip();
+    Trip(const Trip& other);
+    ~Trip();
+    Trip(const char* dest, const Date& date);
 
-        int getTripNum() const;
-        const char* getDest() const;
-        Date getDate() const;
+    Trip& operator=(const Trip& other);
 
-        void setTripNum(int tripNum);
-        void setDest(const char* dest);
-        void setDate(const Date& date);
-        //void printTrip() const; 
-        //hw4
-        friend ostream& operator<<(std::ostream& os, const Trip& trip);
-        static int getCount();
-
-        
-
+    int getTripNum() const;
+    const char* getDest() const;
+    Date getDate() const;
+    void setTripNum(int tripNum);
+    void setDest(const char* dest);
+    void setDate(const Date& date);
+    bool operator==(const Trip& other) const;
+    friend ostream& operator<<(ostream& os, const Trip& trip);
+    static int getCount();
 };
+
 #endif
