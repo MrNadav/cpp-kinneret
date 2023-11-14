@@ -1,27 +1,27 @@
-#ifdef MOUSSECAKE_H
-#define MOUSSECAKE_H
+#ifndef BIRHTDAYCAKE_H
+#define BIRTHDAYCAKE_H
 
-#include "date.h"
 #include "cake.h"
+#include "date.h"
 
-class MusseCake : public Cake {
+class BirthdayCake : public Cake {
     private:
-        char* taste;
+        const char* text;
 
     public:
-        MusseCake(
+        BirthdayCake(
             Date expirtDate,
             int diameter,
             double height,
             double price,
             int storage,
             bool glutenFree,
-            char* taste
+            char* text
         );
 
-        MusseCake(MusseCake& moussecake);
+        BirthdayCake(BirthdayCake& birthdayCake);
 
-        ~MusseCake();
+        ~BirthdayCake();
 
         void setExpireDate(const Date& date) const;
         Date getExpireDate() const;
@@ -40,11 +40,11 @@ class MusseCake : public Cake {
 
         void setGlutenFree(const bool glutenFree) const;
         bool getGlutenFree() const;
+        
+        void setText(const char* text) const;
+        char* getText() const;
 
-        void setTaste(const char* taste) const;
-        char* getTaste() const;
-
-        bool operator==(const MusseCake& ms) const;
+        bool operator==(const BirthdayCake& birthdayCake) const;
 };
 
 #endif

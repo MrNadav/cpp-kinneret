@@ -7,7 +7,7 @@ using namespace std;
 
 class Cake
 {
-    private:
+    protected:
         Date expiryDate;
         int diameter;
         double height;
@@ -15,7 +15,15 @@ class Cake
         int storage;
         bool glutenfree;
     public:
-        Cake(int expirtDate, int diameter, double height,double price,int storage, bool glutenFree);
+        Cake(
+            Date expirtDate,
+            int diameter,
+            double height,
+            double price,
+            int storage,
+            bool glutenFree
+        );
+        
         Cake(Cake& cake);
         friend ostream& operator<<(ostream& os, const Cake& cake);
         bool operator==(const Cake& cake);
@@ -24,8 +32,7 @@ class Cake
 
         
 
-}
-
+};
 
 
 #endif
