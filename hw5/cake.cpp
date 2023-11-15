@@ -11,34 +11,48 @@ Cake::Cake(
     double height,
     double price,
     int storage,
-    bool glutenFree
+    bool glutenfree
 ) {
-    this->expirtDate = expirtDate;
+    this->expiryDate = expirtDate;
     this->diameter = diameter;
     this->height = height;
     this->price = price;
     this->storage = storage;
-    this->glutenFree = glutenFree;
+    this->glutenfree = glutenfree;
 }
 
 Cake::Cake(Cake& cake) {
     if (this != &cake) {
-        this->expirtDate = cake.expirtDate;
+        this->expiryDate = cake.expiryDate;
         this->diameter = cake.diameter;
         this->height = cake.height;
         this->price = cake.price;
         this->storage = cake.storage;
-        this->glutenFree = cake.glutenFree;
+        this->glutenfree = cake.glutenfree;
     }
 }
 
 ostream& Cake::operator<<(ostream& out, const Cake& cake) {
-    out << "Date: " << cake.expirtDate << "\n";
+    out << "Date: " << cake.expiryDate << "\n";
     out << "Diameter: " << cake.diameter <<"\n";
     out << "Height: " << cake.height << "\n";
     out << "Price: " << cake.price << "\n";
-    out << "Storage: " << cake.storage << "\n";
-    out << "glutenFree: " << cake.glutenFree << "\n";
+
+    if (this->storage == 1) {
+        out << "Storage: Refrigeretor" << "\n";
+    }
+    else {
+        out << "Storage: No Refrigeretor" << "\n";
+    }
+
+    if (glutenfree) {
+        out << "without Gluten" << "\n";
+    }
+    else {
+        out << "with gluten" << "\n";
+    }
+
+    return out
 }
 
 Cake& Cake::operator+=(double price){
@@ -47,12 +61,12 @@ Cake& Cake::operator+=(double price){
 bool Cake::operator==(const Cake& cake){
     if(this == &cake)
         return true;
-    if(this->expirtDate == cake.expirtDate 
+    if(this->expiryDate == cake.expiryDate 
         && this->diameter == cake.diameter 
         && this->height == cake.height
         && this->price == cake.price
         && this->storage == cake.storage
-        && this->gluenFree == cake.glutenFree){
+        && this->glutenfree == cake.glutenfree){
             return true;
         }
     return false;

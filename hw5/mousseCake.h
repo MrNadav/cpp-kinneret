@@ -1,8 +1,13 @@
-#ifdef MOUSSECAKE_H
+#ifndef MOUSSECAKE_H
 #define MOUSSECAKE_H
+
+#include <iostream>
+#include <stdbool.h>
 
 #include "date.h"
 #include "cake.h"
+
+using namespace std;
 
 class MusseCake : public Cake {
     private:
@@ -10,12 +15,12 @@ class MusseCake : public Cake {
 
     public:
         MusseCake(
-            Date expirtDate,
+            Date expiryDate,
             int diameter,
             double height,
             double price,
             int storage,
-            bool glutenFree,
+            bool glutenfree,
             char* taste
         );
 
@@ -23,28 +28,30 @@ class MusseCake : public Cake {
 
         ~MusseCake();
 
-        void setExpireDate(const Date& date) const;
+        void setExpireDate(const Date& date);
         Date getExpireDate() const;
 
-        void setDiameter(const int diameter) const;
+        void setDiameter(const int diameter);
         int getDiameter() const;
 
-        double setHeight(const double height) const;
-        int getHeight() const;
+        void setHeight(const double height);
+        double getHeight() const;
 
-        void setPrice(const double price) const;
+        void setPrice(const double price);
         double getPrice() const;
 
-        void setStorage(const int storage) const;
+        void setStorage(const int storage);
         int getStorage() const;
 
-        void setGlutenFree(const bool glutenFree) const;
+        void setGlutenFree(const bool glutenfree);
         bool getGlutenFree() const;
 
-        void setTaste(const char* taste) const;
+        void setTaste(const char* taste);
         char* getTaste() const;
 
-        bool operator==(const MusseCake& ms) const;
+        bool operator==(const MusseCake& ms);
+
+        ostream& operator<<(ostream& out, const MousseCake& ms);
 };
 
 #endif

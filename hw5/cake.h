@@ -1,9 +1,9 @@
-#ifdef CAKE_H
+#ifndef CAKE_H
 #define CAKE_H
 #include <iostream>
 using namespace std;
 
-#include date.h
+#include "date.h"
 
 class Cake
 {
@@ -16,12 +16,12 @@ class Cake
         bool glutenfree;
     public:
         Cake(
-            Date expirtDate,
+            Date expiryDate,
             int diameter,
             double height,
             double price,
             int storage,
-            bool glutenFree
+            bool glutenfree
         );
         
         Cake(Cake& cake);

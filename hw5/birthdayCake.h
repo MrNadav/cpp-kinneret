@@ -1,8 +1,13 @@
 #ifndef BIRHTDAYCAKE_H
 #define BIRTHDAYCAKE_H
 
+#include <iostream>
+#include <stdbool.h>
+
 #include "cake.h"
 #include "date.h"
+
+using namespace std;
 
 class BirthdayCake : public Cake {
     private:
@@ -10,12 +15,12 @@ class BirthdayCake : public Cake {
 
     public:
         BirthdayCake(
-            Date expirtDate,
+            Date expiryDate,
             int diameter,
             double height,
             double price,
             int storage,
-            bool glutenFree,
+            bool glutenfree,
             char* text
         );
 
@@ -23,28 +28,30 @@ class BirthdayCake : public Cake {
 
         ~BirthdayCake();
 
-        void setExpireDate(const Date& date) const;
+        void setExpireDate(const Date& date);
         Date getExpireDate() const;
 
-        void setDiameter(const int diameter) const;
+        void setDiameter(const int diameter);
         int getDiameter() const;
 
-        double setHeight(const double height) const;
-        int getHeight() const;
+        void setHeight(const double height);
+        double getHeight() const;
 
-        void setPrice(const double price) const;
+        void setPrice(const double price);
         double getPrice() const;
 
-        void setStorage(const int storage) const;
+        void setStorage(const int storage);
         int getStorage() const;
 
-        void setGlutenFree(const bool glutenFree) const;
+        void setGlutenFree(const bool glutenfree);
         bool getGlutenFree() const;
         
-        void setText(const char* text) const;
+        void setText(const char* text);
         char* getText() const;
 
-        bool operator==(const BirthdayCake& birthdayCake) const;
+        bool operator==(const BirthdayCake& birthdayCake);
+        
+        friend ostream& operator<<(ostream& out, const BirthdayCake& birthdayCake);
 };
 
 #endif
