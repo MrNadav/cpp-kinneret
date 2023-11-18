@@ -15,21 +15,21 @@ class MusseCake : public Cake {
 
     public:
         MusseCake(
-            Date expiryDate,
+            Date expireDate,
             int diameter,
             double height,
             double price,
             int storage,
-            bool glutenfree,
-            char* taste
+            bool glutenFree,
+            const char* taste
         );
 
-        MusseCake(MusseCake& moussecake);
+        MusseCake(const MusseCake &moussecake);
 
         ~MusseCake();
 
-        void setExpireDate(const Date& date);
-        Date getExpireDate() const;
+        void setExpireDate(const Date &date);
+        const Date& getExpireDate() const;
 
         void setDiameter(const int diameter);
         int getDiameter() const;
@@ -43,15 +43,15 @@ class MusseCake : public Cake {
         void setStorage(const int storage);
         int getStorage() const;
 
-        void setGlutenFree(const bool glutenfree);
+        void setGlutenFree(const bool glutenFree);
         bool getGlutenFree() const;
 
         void setTaste(const char* taste);
-        char* getTaste() const;
+        const char* getTaste() const;
 
-        bool operator==(const MusseCake& ms);
+        bool operator==(const MusseCake &ms);
 
-        ostream& operator<<(ostream& out, const MousseCake& ms);
+        friend ostream& operator<<(ostream& out, const MusseCake &ms);
 };
 
 #endif

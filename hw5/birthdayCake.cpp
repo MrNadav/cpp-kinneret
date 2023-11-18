@@ -1,38 +1,31 @@
-#include <iostream>
-#include <stdbool.h>
-#include <string.h>
 #include "birthdayCake.h"
-#include "cake.h"
-#include "date.h"
-
-using namespace std;
+#include <cstring>
 
 BirthdayCake::BirthdayCake(
-    Date expiryDate,
+    Date expireDate,
     int diameter,
     double height,
     double price,
     int storage,
-    bool glutenfree,
+    bool glutenFree,
     const char* text
 ) : Cake(
-    expiryDate,
+    expireDate,
     diameter,
     height,
     price,
     storage,
-    glutenfree
+    glutenFree
 ) {
     setText(text);
 }
 
-BirthdayCake::BirthdayCake(BirthdayCake& birthdayCake) : Cake(birthdayCake) {
+BirthdayCake::BirthdayCake(const BirthdayCake& birthdayCake) : Cake(birthdayCake) {
     const char* tmp = birthdayCake.getText();
 
     if (tmp != nullptr) {
         setText(tmp);
-    }
-    else {
+    } else {
         this->text = nullptr;
     }
 }
@@ -42,11 +35,11 @@ BirthdayCake::~BirthdayCake() {
 }
 
 void BirthdayCake::setExpireDate(const Date& date) {
-    this->expiryDate = &date;
+    this->expireDate = date;
 }
 
-Date BirthdayCake::getExpireDate() const {
-    return expiryDate;
+const Date& BirthdayCake::getExpireDate() const {
+    return this->expireDate;
 }
 
 void BirthdayCake::setDiameter(const int diameter) {
@@ -74,10 +67,9 @@ double BirthdayCake::getPrice() const {
 }
 
 void BirthdayCake::setStorage(const int storage) {
-    if(storage > 2 || storage <= 0) {
+    if (storage > 2 || storage <= 0) {
         this->storage = 1;
-    }
-    else {
+    } else {
         this->storage = storage;
     }
 }
@@ -86,36 +78,35 @@ int BirthdayCake::getStorage() const {
     return storage;
 }
 
-void BirthdayCake::setGlutenFree(const bool glutenfree) {
-    this->glutenfree = glutenfree;
+void BirthdayCake::setGlutenFree(const bool glutenFree) {
+    this->glutenFree = glutenFree;
 }
 
 bool BirthdayCake::getGlutenFree() const {
-    return glutenfree;
+    return glutenFree;
 }
 
 void BirthdayCake::setText(const char* text) {
+    delete[] this->text;
     this->text = new char[strlen(text) + 1];
-
     strcpy(this->text, text);
 }
 
-char* BirthdayCake::getText() const {
+const char* BirthdayCake::getText() const {
     return text;
 }
 
 bool BirthdayCake::operator==(const BirthdayCake& birthdayCake) {
     if (this == &birthdayCake) {
         return true;
-    }
-    else if (
-        this->expiryDate == birthdayCake.getExpireDate() &&
-        this->diameter == birthdayCake.getDiameter()     &&
-        this->height == birthdayCake.getHeight()         &&
-        this->price == birthdayCake.getPrice()           &&
-        this->storage == birthdayCake.getStorage()       &&
-        this->glutenfree == birthdayCake.getGlutenFree()  &&
-        this->text == birthdayCake.getText()
+    } else if (
+        this->expireDate == birthdayCake.getExpireDate() &&
+        this->diameter == birthdayCake.getDiameter() &&
+        this->height == birthdayCake.getHeight() &&
+        this->price == birthdayCake.getPrice() &&
+        this->storage == birthdayCake.getStorage() &&
+        this->glutenFree == birthdayCake.getGlutenFree() &&
+        strcmp(this->text, birthdayCake.getText()) == 0
     ) {
         return true;
     }
@@ -123,8 +114,8 @@ bool BirthdayCake::operator==(const BirthdayCake& birthdayCake) {
     return false;
 }
 
-ostream& operator<<(ostream& out, const BirthdayCake& birthdayCake) {
-    out << birthdayCake;
+std::ostream& operator<<(std::ostream& out, const BirthdayCake& birthdayCake) {
+    out << static_cast<const Cake&>(birthdayCake);
     out << "Text: " << birthdayCake.getText() << "\n";
 
     return out;

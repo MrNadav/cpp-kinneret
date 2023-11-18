@@ -6,68 +6,72 @@
 using namespace std;
 
 Cake::Cake(
-    Date expirtDate,
+    Date expireDate,
     int diameter,
     double height,
     double price,
     int storage,
-    bool glutenfree
+    bool glutenFree
 ) {
-    this->expiryDate = expirtDate;
+    this->expireDate = expireDate;
     this->diameter = diameter;
     this->height = height;
     this->price = price;
     this->storage = storage;
-    this->glutenfree = glutenfree;
+    this->glutenFree = glutenFree;
 }
 
-Cake::Cake(Cake& cake) {
+Cake::Cake(const Cake &cake) {
     if (this != &cake) {
-        this->expiryDate = cake.expiryDate;
+        this->expireDate = cake.expireDate;
         this->diameter = cake.diameter;
         this->height = cake.height;
         this->price = cake.price;
         this->storage = cake.storage;
-        this->glutenfree = cake.glutenfree;
+        this->glutenFree = cake.glutenFree;
     }
 }
 
-ostream& Cake::operator<<(ostream& out, const Cake& cake) {
-    out << "Date: " << cake.expiryDate << "\n";
+ostream& operator<<(ostream& out, const Cake &cake) {
+    out << "Expired Date: " << cake.expireDate << "\n";
     out << "Diameter: " << cake.diameter <<"\n";
     out << "Height: " << cake.height << "\n";
     out << "Price: " << cake.price << "\n";
 
-    if (this->storage == 1) {
+    if (cake.storage == 1) {
         out << "Storage: Refrigeretor" << "\n";
     }
     else {
         out << "Storage: No Refrigeretor" << "\n";
     }
 
-    if (glutenfree) {
+    if (cake.glutenFree) {
         out << "without Gluten" << "\n";
     }
     else {
         out << "with gluten" << "\n";
     }
 
-    return out
+    return out;
 }
 
 Cake& Cake::operator+=(double price){
-    this.price += price;
+    this->price += price;
+
+    return *this;
 }
-bool Cake::operator==(const Cake& cake){
+
+bool Cake::operator==(const Cake &cake){
     if(this == &cake)
         return true;
-    if(this->expiryDate == cake.expiryDate 
+    if(this->expireDate == cake.expireDate 
         && this->diameter == cake.diameter 
         && this->height == cake.height
         && this->price == cake.price
         && this->storage == cake.storage
-        && this->glutenfree == cake.glutenfree){
-            return true;
-        }
+        && this->glutenFree == cake.glutenFree
+    ){
+        return true;
+    }
     return false;
 }
