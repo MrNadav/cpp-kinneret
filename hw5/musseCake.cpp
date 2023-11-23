@@ -126,7 +126,8 @@ bool MusseCake::operator==(const MusseCake &ms) {
 }
 
 ostream& operator<<(ostream& out, const MusseCake &ms) {
-    out << ms;
+    // Call the base class operator<< by explicitly qualifying it with Cake::
+    out << (const Cake&)ms;
     out << "Taste: " << ms.getTaste() << "\n";
     return out;
 }

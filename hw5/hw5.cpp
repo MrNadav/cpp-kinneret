@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string.h>
-#include <stdbool.h>
+#include <string>
+#include <limits>
 
 using namespace std;
 
@@ -9,10 +9,10 @@ using namespace std;
 #include "musseCake.h"
 #include "birthdayCake.h"
 
-Cake* cakeArr;
+Cake** cakeArr = nullptr;
 int cakeLength = 0;
 
-Date& dateInput() {
+Date dateInput() {
     int year, month, day;
     cout << "Enter a year: ";
     cin >> year;
@@ -21,19 +21,14 @@ Date& dateInput() {
     cout << "\nEnter a day: ";
     cin >> day;
 
-    return Date(
-        day,
-        month,
-        year
-    );
+    return Date(day, month, year);
 }
 
-Cake& cakeInput() {
+Cake* cakeInput() {
     Date dt = dateInput();
     
     int diameter, storage;
     double height, price;
-    
     bool glutenFree;
 
     cout << "Enter the diameter: ";
@@ -42,85 +37,105 @@ Cake& cakeInput() {
     cin >> height;
     cout << "\nEnter the price: ";
     cin >> price;
-    cout << "\nPick storage type, 1. for Refrigeretor, 2. for nothing: ";
+    cout << "\nPick storage type, 1. for Refrigerator, 2. for nothing: ";
     cin >> storage;
-    cout << "\nGluten Free? (true of false): ";
+    cout << "\nGluten Free? (1 for true, 0 for false): ";
     cin >> glutenFree;
 
-    return Cake(
-        dt,
-        diameter,
-        height,
-        price,
-        storage,
-        glutenFree
-    );
+    return new Cake(dt, diameter, height, price, storage, glutenFree);
 }
 
-void appendNewCake(Cake &cake) {
-    Cake* tmp = new Cake[cakeLength+1];
+void appendNewCake(Cake* cake) {
+    Cake** tmp = new Cake*[cakeLength + 1];
 
-    for(int i=0; i<cakeLength; i++) {
+    for (int i = 0; i < cakeLength; i++) {
         tmp[i] = cakeArr[i];
     }
 
-    delete[] cakeArr;
-
-    cakeLength++;
-
     tmp[cakeLength] = cake;
+    delete[] cakeArr;
     cakeArr = tmp;
-
-    delete[] tmp;
+    cakeLength++;
 }
 
 void createCake() {
     appendNewCake(cakeInput());
-}   
-
+}
 void createBirthdayCake() {
-    BirthdayCake bc = cakeInput();
+    Date dt = dateInput();
 
-    const char* text = new char[bc.getDiameter()];
+    int diameter, storage;
+    double height, price;
+    bool glutenFree;
 
-    cout << "Enter a text: ";
-    cin.ignore();
-    cin.getline(text, bc.getDiameter());
+    cout << "Enter the diameter: ";
+    cin >> diameter;
+    cout << "\nEnter the height: ";
+    cin >> height;
+    cout << "\nEnter the price: ";
+    cin >> price;
+    cout << "\nPick storage type, 1. for Refrigerator, 2. for nothing: ";
+    cin >> storage;
+    cout << "\nGluten Free? (1 for true, 0 for false): ";
+    cin >> glutenFree;
 
-    bc.setText(text);
+    // Make sure to input the text on a new line to avoid capturing previous newline character
+    cout << "Enter a text for the birthday cake: ";
+    string text;
+    cin >> ws; // A call to ws to consume whitespaces if necessary
+    getline(cin, text);
 
-    delete[] text;
-
+    BirthdayCake* bc = new BirthdayCake(dt, diameter, height, price, storage, glutenFree, text.c_str());
     appendNewCake(bc);
 }
 
 void createMusseCake() {
-    MusseCake mc = cakeInput();
+    Date dt = dateInput();
 
-    const char* taste = new char[mc.getDiameter()];
+    int diameter, storage;
+    double height, price;
+    bool glutenFree;
 
-    cout << "Enter the taste: ";
-    cin.ignore();
-    cin.getline(taste, mc.getDiameter());
+    cout << "Enter the diameter: ";
+    cin >> diameter;
+    cout << "\nEnter the height: ";
+    cin >> height;
+    cout << "\nEnter the price: ";
+    cin >> price;
+    cout << "\nPick storage type, 1. for Refrigerator, 2. for nothing: ";
+    cin >> storage;
+    cout << "\nGluten Free? (1 for true, 0 for false): ";
+    cin >> glutenFree;
 
-    mc.setTaste(taste);
+    // Make sure to input the taste on a new line to avoid capturing previous newline character
+    cout << "Enter a taste for the mousse cake: ";
+    string taste;
+    cin >> ws; // A call to ws to consume whitespaces if necessary
+    getline(cin, taste);
 
-    delete[] taste;
-
+    MusseCake* mc = new MusseCake(dt, diameter, height, price, storage, glutenFree, taste.c_str());
     appendNewCake(mc);
 }
 
+
 void printAllCakes() {
-    for(int i=0; i<cakeLength; i++) {
-        cout << cakeArr[i] << endl;
+    for (int i = 0; i < cakeLength; i++) {
+        cout << *(cakeArr[i]) << endl;
     }
 }
 
 int main() {
     int op;
     do {
-        cout << "1 for Cake\n2 for birthdayCake\n3 for musseCake\n4 to print all cakes\n5 to exit" << endl;
+        cout << "1 for Cake\n2 for BirthdayCake\n3 for MusseCake\n4 to print all cakes\n5 to exit" << endl;
         cin >> op;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input, try again." << endl;
+            continue;
+        }
 
         switch (op) {
             case 1:
@@ -137,17 +152,17 @@ int main() {
                 break;
             default:
                 cout << op << " is not a valid option" << endl;
-                continue
+                continue;
         }
     } while (op != 5);
 
     cout << "bye bye!" << endl;
 
-    for(int i=0; i<cakeLength; i++) {
+    for (int i = 0; i < cakeLength; i++) {
         delete cakeArr[i];
     }
 
     delete[] cakeArr;
     
-    return 1;
+    return 0;
 }
