@@ -65,13 +65,11 @@ bool Loan::operator==(const Loan &other) const{
         );
 }
 
-Loan& Loan::operator+(int extraTime) 
+Loan& Loan::operator+(int extraTime) // Loan a, b; b + 5;
 {
     this->term = term + extraTime;
     return *this;
 }
-
-
 
 void Loan::display()
 {
